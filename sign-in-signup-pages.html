@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication System</title>
+</head>
+<body>
+    <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    </div>
+    <div class="container">
+        <!-- Sign In Form -->
+        <div id="signInForm">
+            <h2>Sign In</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <div class="switch-form">
+                New User? <button class="switch-btn" id="showSignUp">Create an account</button>
+            </div>
+            <div id="loginSuccess" class="success-message">Login successful!</div>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="signUpForm">
+            <h2>Create Account</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="switch-form">
+                Already have an account? <button class="switch-btn" id="showSignIn">Sign In</button>
+            </div>
+            <div id="registerSuccess" class="success-message">Registration successful! You can now sign in.</div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const signInForm = document.getElementById('signInForm');
+        const signUpForm = document.getElementById('signUpForm');
+        const showSignUpBtn = document.getElementById('showSignUp');
+        const showSignInBtn = document.getElementById('showSignIn');
+        const loginForm = document.getElementById('loginForm');
+        const registrationForm = document.getElementById('registrationForm');
+        const loginSuccess = document.getElementById('loginSuccess');
+        const registerSuccess = document.getElementById('registerSuccess');
+
+        // Switch to Sign Up form
+        showSignUpBtn.addEventListener('click', () => {
+            signInForm.style.display = 'none';
+            signUpForm.style.display = 'block';
+        });
+
+        // Switch to Sign In form
+        showSignInBtn.addEventListener('click', () => {
+            signUpForm.style.display = 'none';
+            signInForm.style.display = 'block';
+        });
+
+        // Handle Sign In submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple validation - in a real app, you would check against stored credentials
+            if (email && password) {
+                loginSuccess.style.display = 'block';
+                loginForm.reset();
+                setTimeout(() => {
+                    loginSuccess.style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        // Handle Sign Up submission
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Simple validation
+            if (password !== confirmPassword) {
+                alert("Passwords don't match!");
+                return;
+            }
+            
+            if (fullName && email && password) {
+                // In a real app, you would store the user credentials securely
+                registerSuccess.style.display = 'block';
+                registrationForm.reset();
+                
+                // Automatically switch to sign in form after successful registration
+                setTimeout(() => {
+                    registerSuccess.style.display = 'none';
+                    signUpForm.style.display = 'none';
+                    signInForm.style.display = 'block';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
